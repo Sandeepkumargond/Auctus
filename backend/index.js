@@ -5,6 +5,8 @@ import fileUpload from 'express-fileupload';
 import os from "os";
 import { connection, DATABASE_MODES } from './db/connection.js';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 import userroute from "./routes/userroutes.js";
 import errorMiddleware from './middlewares/error.js';
 import auctionItemRoute from "./routes/auctionItemRoutes.js";
@@ -55,10 +57,65 @@ app.use(fileUpload({
     limits: { fileSize: 2 * 1024 * 1024 },
 }));
 
+// Mount Swagger UI — available at /api-docs
+// Enabled in all environments by default; set SWAGGER_ENABLED=false to disable.
+if (process.env.SWAGGER_ENABLED !== 'false') {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+        customSiteTitle: 'Auctus API Docs',
+        swaggerOptions: {
+            persistAuthorization: true,
+        },
+    }));
+    app.get('/api-docs.json', (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec);
+    });
+}
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags: [System]
+ *     summary: API root — confirms the server is running
+ *     responses:
+ *       200:
+ *         description: Server is running
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: server is running
+ */
 app.get("/",(req,res)=>{
     res.send("server is running");
 })
 
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     tags: [System]
+ *     summary: Health check — returns uptime and status
+ *     responses:
+ *       200:
+ *         description: Server is healthy
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 status:
+ *                   type: string
+ *                   example: ok
+ *                 uptime:
+ *                   type: number
+ *                   description: Server uptime in seconds
+ *                   example: 3600
+ */
 app.get("/health",(req,res)=>{
     res.status(200).json({
         success: true,
@@ -67,6 +124,41 @@ app.get("/health",(req,res)=>{
     });
 })
 
+/**
+ * @swagger
+ * /ready:
+ *   get:
+ *     tags: [System]
+ *     summary: Readiness check — returns database connection status
+ *     responses:
+ *       200:
+ *         description: Server and database are ready
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 status:
+ *                   type: string
+ *                   enum: [ready, not_ready]
+ *                 database:
+ *                   type: string
+ *                   enum: [connected, disconnected]
+ *       503:
+ *         description: Database not yet connected
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ */
 app.get("/ready",(req,res)=>{
     const readiness = getReadinessSnapshot();
     res.status(readiness.production.connected ? 200 : 503).json({

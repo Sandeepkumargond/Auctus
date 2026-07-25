@@ -35,6 +35,35 @@ const serializeDemoUser = (user, demoSession, persona) => ({
   demoPersona: persona,
 });
 
+/**
+ * @swagger
+ * /api/v1/demo/status:
+ *   get:
+ *     tags: [Demo]
+ *     summary: Check if demo mode is available
+ *     responses:
+ *       200:
+ *         description: Demo availability status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 available:
+ *                   type: boolean
+ *                 ttlHours:
+ *                   type: integer
+ *                   example: 24
+ *                 personas:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: [Bidder, Auctioneer, Super Admin]
+ *                 message:
+ *                   type: string
+ */
 router.get("/status", (req, res) => {
   const ttlHours = Number(process.env.DEMO_SESSION_TTL_HOURS || 24);
   return res.status(200).json({
@@ -48,6 +77,62 @@ router.get("/status", (req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/v1/demo/start:
+ *   post:
+ *     tags: [Demo]
+ *     summary: Start a sandboxed demo session
+ *     description: |
+ *       Creates an isolated demo session with a pre-seeded persona (Bidder, Auctioneer, or Super Admin).
+ *       Demo data is scoped to the session and expires automatically after TTL hours.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               persona:
+ *                 type: string
+ *                 enum: [Bidder, Auctioneer, Super Admin]
+ *                 default: Bidder
+ *                 example: Bidder
+ *     responses:
+ *       201:
+ *         description: Demo session started, JWT issued
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *                 demo:
+ *                   type: object
+ *                   properties:
+ *                     sessionId:
+ *                       type: string
+ *                     expiresAt:
+ *                       type: string
+ *                       format: date-time
+ *                     persona:
+ *                       type: string
+ *                     dashboardPath:
+ *                       type: string
+ *                     limitations:
+ *                       type: string
+ *       503:
+ *         description: Demo mode not available
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 router.post(
   "/start",
   requireDemoMode,
@@ -77,6 +162,47 @@ router.post(
   })
 );
 
+/**
+ * @swagger
+ * /api/v1/demo/switch:
+ *   post:
+ *     tags: [Demo]
+ *     summary: Switch persona within the current demo session
+ *     security:
+ *       - cookieAuth: []
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [persona]
+ *             properties:
+ *               persona:
+ *                 type: string
+ *                 enum: [Bidder, Auctioneer, Super Admin]
+ *     responses:
+ *       200:
+ *         description: Persona switched, new JWT issued
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       403:
+ *         description: Not in demo mode
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 router.post(
   "/switch",
   requireDemoMode,
@@ -110,6 +236,23 @@ router.post(
   })
 );
 
+/**
+ * @swagger
+ * /api/v1/demo/session:
+ *   delete:
+ *     tags: [Demo]
+ *     summary: End the current demo session and clear demo cookie
+ *     security:
+ *       - cookieAuth: []
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Demo session ended
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Success'
+ */
 router.delete(
   "/session",
   requireDemoMode,
@@ -127,6 +270,51 @@ router.delete(
   })
 );
 
+/**
+ * @swagger
+ * /api/v1/demo/convert-watchlist:
+ *   post:
+ *     tags: [Demo]
+ *     summary: Copy demo watchlist interests to a real user account after signup
+ *     security:
+ *       - cookieAuth: []
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               demoSessionId:
+ *                 type: string
+ *               conversionToken:
+ *                 type: string
+ *               persona:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Demo watchlist items copied to real account
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 copiedCount:
+ *                   type: integer
+ *                 watchlist:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       403:
+ *         description: Cannot convert from inside a demo session
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 router.post(
   "/convert-watchlist",
   requireDemoMode,
