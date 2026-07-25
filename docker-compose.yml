@@ -1,0 +1,88 @@
+services:
+  # ─────────────────────────────────────────────────────────────────
+  # MongoDB
+  # ─────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: auctus-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"       # expose for local tools (Compass, mongosh)
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ─────────────────────────────────────────────────────────────────
+  # Backend — Express API
+  # ─────────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: auctus-backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      # ── Database ──────────────────────────────────────────────────
+      # Uses "mongo" as hostname — resolved via Docker network
+      MONGODB_URL: mongodb://mongo:27017/auctus
+      # ── Auth ──────────────────────────────────────────────────────
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_EXPIRE: ${COOKIE_EXPIRE:-7}
+      COOKIE_SECURE: "true"
+      # ── CORS ──────────────────────────────────────────────────────
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:80}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:80}
+      # ── Cron ──────────────────────────────────────────────────────
+      CRON_SECRET: ${CRON_SECRET}
+      # ── Google OAuth ──────────────────────────────────────────────
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      # ── Email (SMTP) ───────────────────────────────────────────────
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_MAIL: ${SMTP_MAIL}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_FROM: ${SMTP_FROM}
+      # ── AI ────────────────────────────────────────────────────────
+      AI_FEATURES_ENABLED: ${AI_FEATURES_ENABLED:-false}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.0-flash}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      # ── Demo mode ─────────────────────────────────────────────────
+      DEMO_DISABLED: ${DEMO_DISABLED:-false}
+      DEMO_SESSION_TTL_HOURS: ${DEMO_SESSION_TTL_HOURS:-24}
+      # ── Swagger ───────────────────────────────────────────────────
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED:-true}
+
+  # ─────────────────────────────────────────────────────────────────
+  # Frontend — Vite React app served via nginx
+  # ─────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Passed to Vite at build time
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000/api/v1}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID}
+    container_name: auctus-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  mongo_data:
+    name: auctus-mongo-data
