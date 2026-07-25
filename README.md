@@ -134,6 +134,72 @@ npm run build
 
 ---
 
+## API Documentation
+
+Swagger UI is available once the backend server is running:
+
+| URL | Description |
+|---|---|
+| `http://localhost:8000/api-docs` | Interactive Swagger UI |
+| `http://localhost:8000/api-docs.json` | Raw OpenAPI JSON spec |
+
+All **51 endpoints** are documented with request/response schemas, authentication requirements, and examples. Use the **Authorize** button in Swagger UI to set your Bearer token or cookie before testing protected routes.
+
+> Set `SWAGGER_ENABLED=false` in your environment to disable the UI in production if needed.
+
+---
+
+## Running with Docker
+
+Docker Compose runs the full stack — MongoDB, backend, and frontend — with a single command.
+
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker + Docker Compose v2)
+
+### Setup
+
+1. **Create a `.env` file** at the repo root with your secrets (never committed):
+
+```env
+JWT_SECRET=replace-with-a-long-random-secret
+CRON_SECRET=replace-with-a-long-random-secret
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_MAIL=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+GEMINI_API_KEY=your-gemini-api-key
+AI_FEATURES_ENABLED=true
+VITE_API_BASE_URL=http://localhost:8000/api/v1
+VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+```
+
+2. **Build and start all services:**
+
+```bash
+docker-compose up --build
+```
+
+3. **Access the app:**
+
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:80 |
+| Backend API | http://localhost:8000/api/v1 |
+| Swagger Docs | http://localhost:8000/api-docs |
+| MongoDB | mongodb://localhost:27017/auctus |
+
+4. **Stop services:**
+
+```bash
+docker-compose down          # stop containers
+docker-compose down -v       # stop + delete MongoDB volume (⚠ deletes all data)
+```
+
+> MongoDB data is persisted in a named Docker volume (`auctus-mongo-data`) across restarts.
+
+---
+
 ## Deployment
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for step-by-step instructions for Vercel, Render, and Netlify.
