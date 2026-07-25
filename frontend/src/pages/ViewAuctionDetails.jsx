@@ -110,8 +110,8 @@ const ViewAuctionDetails = () => {
                         {fulfillmentSummary?.hasDeliveryAddress
                           ? "The winner has added delivery details. Continue dispatch from the seller dashboard."
                           : fulfillmentSummary
-                            ? "PrimeBid notified the winner to add delivery details before dispatch."
-                            : "PrimeBid is preparing the winner handoff and settlement record."}
+                            ? "Auctus notified the winner to add delivery details before dispatch."
+                            : "Auctus is preparing the winner handoff and settlement record."}
                       </p>
                       <Link
                         to="/seller-dashboard#fulfillment"

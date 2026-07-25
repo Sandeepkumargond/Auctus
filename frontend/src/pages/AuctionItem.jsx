@@ -313,15 +313,15 @@ const AuctionItem = () => {
     };
     try {
       const existing = JSON.parse(
-        localStorage.getItem("primebid_recently_viewed") || "[]"
+        localStorage.getItem("auctus_recently_viewed") || "[]"
       );
       const next = [
         payload,
         ...existing.filter((item) => item._id !== auctionDetail._id),
       ].slice(0, 12);
-      localStorage.setItem("primebid_recently_viewed", JSON.stringify(next));
+      localStorage.setItem("auctus_recently_viewed", JSON.stringify(next));
     } catch {
-      localStorage.setItem("primebid_recently_viewed", JSON.stringify([payload]));
+      localStorage.setItem("auctus_recently_viewed", JSON.stringify([payload]));
     }
   }, [auctionDetail]);
 
@@ -754,7 +754,7 @@ const AuctionItem = () => {
                       {status === "Upcoming"
                         ? "Auction has not started yet."
                         : closureStatus === "Processing"
-                          ? "Auction ended. PrimeBid is finalizing the winner and escrow."
+                          ? "Auction ended. Auctus is finalizing the winner and escrow."
                           : "Auction has ended."}
                     </p>
                     {status === "Ended" && userWon && (
@@ -845,7 +845,7 @@ const SellerTrustPanel = ({ seller, quality }) => {
         <div>
           <p className="app-kicker">Seller Trust</p>
           <h2 className="mt-2 text-xl font-bold text-slate-950">
-            {seller?.userName || "PrimeBid seller"}
+            {seller?.userName || "Auctus seller"}
           </h2>
           <p className="mt-2 text-sm leading-6 text-slate-500">
             {getSellerRiskSummary(quality)}
@@ -891,7 +891,7 @@ const PostCloseNotice = ({
   const hasAddress = Boolean(fulfillmentSummary?.hasDeliveryAddress);
   const copy =
     closureStatus === "Processing"
-      ? "PrimeBid is finalizing the winner, escrow, and handoff."
+      ? "Auctus is finalizing the winner, escrow, and handoff."
       : closureStatus === "NoWinner"
         ? "No valid winning bid was available for this auction."
         : closureStatus === "NeedsReview"
@@ -903,8 +903,8 @@ const PostCloseNotice = ({
             : isOwnAuction
               ? hasAddress
                 ? "The winner has added an address. Continue from your fulfillment queue."
-                : "PrimeBid notified the winner to add a delivery address."
-              : "Winner handoff is being managed through PrimeBid escrow.";
+                : "Auctus notified the winner to add a delivery address."
+              : "Winner handoff is being managed through Auctus escrow.";
 
   return (
     <div className="mt-5 rounded-md border border-slate-200 bg-slate-50 p-4">

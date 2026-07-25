@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: primebid-api
+    name: auctus-api
     env: node
     plan: free
     rootDir: backend
@@ -54,7 +54,7 @@ services:
         sync: false
 
   - type: web
-    name: primebid-web
+    name: auctus-web
     env: static
     plan: free
     rootDir: frontend

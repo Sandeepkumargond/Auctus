@@ -72,7 +72,7 @@ const buildTrustBadges = ({
       id: "new-seller",
       label: "New seller",
       tone: "slate",
-      description: "Limited completed-sale history on PrimeBid.",
+      description: "Limited completed-sale history on Auctus.",
     });
   }
   if (ratingCount >= 3 && ratingAverage >= 4.5) {
@@ -88,7 +88,7 @@ const buildTrustBadges = ({
       id: "experienced-seller",
       label: "Experienced seller",
       tone: "indigo",
-      description: "Multiple completed PrimeBid handoffs.",
+      description: "Multiple completed Auctus handoffs.",
     });
   }
   if (completedSales >= 3 && disputeRate <= 0.1) {

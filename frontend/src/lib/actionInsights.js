@@ -253,7 +253,7 @@ export const buildSellerNextActions = ({
       id: "awaiting-address",
       label: "Waiting for buyer address",
       count: awaitingAddressCount,
-      detail: "PrimeBid has notified winners to add delivery details.",
+      detail: "Auctus has notified winners to add delivery details.",
       actionLabel: "View handoffs",
       to: "#fulfillment",
       priority: "medium",

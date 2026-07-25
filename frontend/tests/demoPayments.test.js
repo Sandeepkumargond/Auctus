@@ -23,7 +23,7 @@ test("validates a card demo payment", () => {
   const result = validateDemoPayment({
     amount: 5000,
     paymentMethod: "Credit Card",
-    cardName: "PrimeBid Buyer",
+    cardName: "Auctus Buyer",
     cardNumber: "4111111111111111",
     cardExpiry: "12/40",
     cardCvv: "123",

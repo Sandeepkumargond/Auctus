@@ -8,7 +8,7 @@ import WalletTransaction from "../models/walletTransactionSchema.js";
 dotenv.config();
 
 const PROFILE_IMAGE = {
-    public_id: "primebid-demo-profile",
+    public_id: "auctus-demo-profile",
     url: "/imageHolder.jpg",
 };
 
@@ -35,11 +35,11 @@ const mergeWallet = (existingWallet, targetWallet = {}) => {
 
 const demoUsers = [
     {
-        userName: "PrimeBid Admin",
-        email: "admin@primebid.local",
-        password: "PrimeBid@123",
+        userName: "Auctus Admin",
+        email: "admin@auctus.local",
+        password: "Auctus@123",
         phone: "9000000001",
-        address: "PrimeBid admin workspace",
+        address: "Auctus admin workspace",
         role: "Super Admin",
         kycStatus: "Approved",
         accountStatus: "Active",
@@ -52,7 +52,7 @@ const demoUsers = [
     },
     {
         userName: "Demo Auctioneer",
-        email: "auctioneer@primebid.local",
+        email: "auctioneer@auctus.local",
         password: "Auctioneer@123",
         phone: "9000000002",
         address: "Demo auctioneer address",
@@ -77,7 +77,7 @@ const demoUsers = [
     },
     {
         userName: "Demo Bidder",
-        email: "bidder@primebid.local",
+        email: "bidder@auctus.local",
         password: "Bidder@123",
         phone: "9000000003",
         address: "Demo bidder address",
@@ -169,7 +169,7 @@ try {
 
     for (const demoUser of demoUsers) {
         const user = await seedDemoUser(demoUser);
-        if (demoUser.email === "bidder@primebid.local") {
+        if (demoUser.email === "bidder@auctus.local") {
             await ensureDemoTopUpHistory(user);
         }
 

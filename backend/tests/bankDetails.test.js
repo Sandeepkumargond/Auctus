@@ -70,7 +70,7 @@ test("falls back to request bank details when saved details are invalid", () => 
 test("validates complete bank details", () => {
   const result = validateBankTransferDetails({
     bankName: "Axis Bank",
-    bankAccountName: "PrimeBid Buyer",
+    bankAccountName: "Auctus Buyer",
     bankAccountNumber: "123456789012",
     bankIFSCCode: "UTIB0000123",
   });

@@ -15,7 +15,7 @@ const NotFound = () => {
             Page not found
           </p>
           <h1 className="mt-2 text-3xl font-bold text-slate-950 md:text-4xl">
-            This PrimeBid page does not exist.
+            This Auctus page does not exist.
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
             The link may be outdated, the route may have moved, or the auction

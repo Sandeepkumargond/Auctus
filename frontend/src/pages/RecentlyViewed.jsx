@@ -3,7 +3,7 @@ import { Clock3, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const STORAGE_KEY = "primebid_recently_viewed";
+const STORAGE_KEY = "auctus_recently_viewed";
 
 const RecentlyViewed = () => {
   const [items, setItems] = useState([]);

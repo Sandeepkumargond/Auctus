@@ -17,7 +17,7 @@ const parseOrigins = (value) =>
 
 export const getAllowedOrigins = () => [
   ...new Set([
-    "https://primebid.vercel.app",
+    "https://auctus.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     ...parseOrigins(process.env.CLIENT_URL),

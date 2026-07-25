@@ -12,7 +12,7 @@ const About = () => {
       icon: Sparkles,
       title: "Innovation",
       description:
-        "PrimeBid keeps auction discovery, bidding, and seller tools in one practical workspace.",
+        "Auctus keeps auction discovery, bidding, and seller tools in one practical workspace.",
     },
     {
       icon: UsersRound,
@@ -33,13 +33,13 @@ const About = () => {
       <div className="app-container flex flex-col gap-10">
         <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:p-10">
           <p className="app-kicker">
-            About PrimeBid
+            About Auctus
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-bold leading-tight text-slate-950 md:text-6xl">
             A focused auction platform for bidders and sellers.
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-            PrimeBid helps auctioneers publish items, bidders compete for lots,
+            Auctus helps auctioneers publish items, bidders compete for lots,
             and administrators track wallet settlement from one consistent
             marketplace.
           </p>
@@ -78,7 +78,7 @@ const About = () => {
         <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-6 text-indigo-950">
           <h2 className="text-xl font-semibold">Join the marketplace</h2>
           <p className="mt-2 leading-7">
-            Whether you are listing items or competing for them, PrimeBid gives
+            Whether you are listing items or competing for them, Auctus gives
             you a clearer place to manage the auction journey.
           </p>
         </div>

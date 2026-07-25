@@ -105,7 +105,7 @@ const Home = () => {
                     Trusted auction marketplace
                   </p>
                   <h1 className="mt-4 max-w-[9ch] text-5xl font-bold leading-[0.98] sm:text-6xl 2xl:text-7xl">
-                    PrimeBid
+                    Auctus
                   </h1>
                   <p className="mt-5 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
                     Browse live lots, understand the next bid, and participate

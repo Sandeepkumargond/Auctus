@@ -118,7 +118,7 @@ const assistAuctionListing = asyncErrorHandler(async (req, res, next) => {
 
     const suggestion = await callGeminiJson({
         system:
-            "You improve auction listings for PrimeBid. Stay factual and buyer-safe. Do not invent brand, authenticity, warranty, serial number, defects, provenance, included accessories, or condition details. If important facts are unknown, place them in missingDetails.",
+            "You improve auction listings for Auctus. Stay factual and buyer-safe. Do not invent brand, authenticity, warranty, serial number, defects, provenance, included accessories, or condition details. If important facts are unknown, place them in missingDetails.",
         task:
             "Create a polished auction listing. JSON shape: {title:string, description:string, category:string, condition:string, sellingPoints:string[], missingDetails:string[], qualityTips:string[]}. Use exactly one allowed category and one allowed condition.",
         payload: {
@@ -154,7 +154,7 @@ const suggestAuctionCategory = asyncErrorHandler(async (req, res, next) => {
 
     const suggestion = await callGeminiJson({
         system:
-            "You classify auction listings for PrimeBid. Use only the allowed category and condition values.",
+            "You classify auction listings for Auctus. Use only the allowed category and condition values.",
         task:
             "Suggest the best category and likely condition. JSON shape: {category:string, condition:string, confidence:number, reason:string}. confidence is 0 to 100.",
         payload: {

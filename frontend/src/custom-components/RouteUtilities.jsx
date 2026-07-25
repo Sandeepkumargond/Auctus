@@ -28,7 +28,7 @@ const pageTitles = {
 const getPageTitle = (pathname) => {
   if (pathname.startsWith("/auction/item/")) return "Auction Details";
   if (pathname.startsWith("/auction/details/")) return "Seller Auction Details";
-  return pageTitles[pathname] || "PrimeBid";
+  return pageTitles[pathname] || "Auctus";
 };
 
 const RouteUtilities = () => {
@@ -39,7 +39,7 @@ const RouteUtilities = () => {
   );
 
   useEffect(() => {
-    document.title = `${pageTitle} | PrimeBid`;
+    document.title = `${pageTitle} | Auctus`;
     const targetId = getHashTargetId(location.hash);
 
     if (!targetId) {

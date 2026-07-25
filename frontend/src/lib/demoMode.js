@@ -1,6 +1,6 @@
-const DEMO_CONVERSION_TOKEN_KEY = "primebid_demo_conversion_token";
-const DEMO_SESSION_ID_KEY = "primebid_demo_session_id";
-const DEMO_PERSONA_KEY = "primebid_demo_persona";
+const DEMO_CONVERSION_TOKEN_KEY = "auctus_demo_conversion_token";
+const DEMO_SESSION_ID_KEY = "auctus_demo_session_id";
+const DEMO_PERSONA_KEY = "auctus_demo_persona";
 
 let memoryConversion = {
   conversionToken: "",

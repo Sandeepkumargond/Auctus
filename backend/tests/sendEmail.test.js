@@ -61,12 +61,12 @@ test("email transport supports explicit SMTP host and port", () => {
     process.env.SMTP_PORT = "465";
     process.env.SMTP_MAIL = "sender@example.com";
     process.env.SMTP_PASSWORD = "app-password";
-    process.env.SMTP_FROM = "PrimeBid <sender@example.com>";
+    process.env.SMTP_FROM = "Auctus <sender@example.com>";
 
     const config = getEmailTransportConfig();
 
     assert.equal(config.configured, true);
-    assert.equal(config.from, "PrimeBid <sender@example.com>");
+    assert.equal(config.from, "Auctus <sender@example.com>");
     assert.equal(config.transport.host, "smtp.example.com");
     assert.equal(config.transport.port, 465);
     assert.equal(config.transport.secure, true);

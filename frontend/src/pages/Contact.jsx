@@ -61,7 +61,7 @@ const Contact = () => {
           </h1>
           <p className="mt-4 leading-7 text-slate-600">
             Send details about the listing, bid, wallet, payout, or account issue
-            and the PrimeBid team can review it.
+            and the Auctus team can review it.
           </p>
 
           <div className="mt-8 grid gap-3">

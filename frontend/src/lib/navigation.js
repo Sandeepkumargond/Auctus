@@ -5,8 +5,8 @@ export const getSafeRedirectPath = (from, fallback = "/") => {
   if (!candidate.startsWith("/") || candidate.startsWith("//")) return fallback;
 
   try {
-    const url = new URL(candidate, "https://primebid.local");
-    if (url.origin !== "https://primebid.local") return fallback;
+    const url = new URL(candidate, "https://auctus.local");
+    if (url.origin !== "https://auctus.local") return fallback;
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return fallback;

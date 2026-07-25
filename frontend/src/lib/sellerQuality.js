@@ -68,7 +68,7 @@ export const normalizeTrustBadges = (quality, fallbackSeller = {}) => {
       id: "new-seller",
       label: "New seller",
       tone: "slate",
-      description: "Limited completed-sale history on PrimeBid.",
+      description: "Limited completed-sale history on Auctus.",
     },
   ];
 };

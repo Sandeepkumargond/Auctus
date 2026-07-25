@@ -7,13 +7,13 @@ import User from "../models/userSchema.js";
 dotenv.config();
 
 const adminDefaults = {
-    userName: process.env.ADMIN_SEED_USERNAME || "PrimeBid Admin",
-    email: (process.env.ADMIN_SEED_EMAIL || "admin@primebid.local")
+    userName: process.env.ADMIN_SEED_USERNAME || "Auctus Admin",
+    email: (process.env.ADMIN_SEED_EMAIL || "admin@auctus.local")
         .toLowerCase()
         .trim(),
-    password: process.env.ADMIN_SEED_PASSWORD || "PrimeBid@123",
+    password: process.env.ADMIN_SEED_PASSWORD || "Auctus@123",
     phone: process.env.ADMIN_SEED_PHONE || "9000000001",
-    address: process.env.ADMIN_SEED_ADDRESS || "PrimeBid admin workspace",
+    address: process.env.ADMIN_SEED_ADDRESS || "Auctus admin workspace",
 };
 
 const ensureAdminUser = async () => {
@@ -47,7 +47,7 @@ const ensureAdminUser = async () => {
     admin.profileImage = admin.profileImage?.url
         ? admin.profileImage
         : {
-              public_id: "primebid-admin-profile",
+              public_id: "auctus-admin-profile",
               url: "/imageHolder.jpg",
           };
     admin.wallet = {

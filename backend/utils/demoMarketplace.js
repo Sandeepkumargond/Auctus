@@ -2,7 +2,7 @@ const buildDate = (offsetMs) => new Date(Date.now() + offsetMs).toISOString();
 
 const seller = {
   _id: "65f0000000000000000000a1",
-  userName: "PrimeBid Verified Seller",
+  userName: "Auctus Verified Seller",
   reputation: {
     ratingAverage: 4.8,
     ratingCount: 24,

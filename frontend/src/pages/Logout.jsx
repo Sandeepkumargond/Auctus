@@ -23,7 +23,7 @@ const Logout = () => {
             <LogOut className="h-7 w-7" />
           </span>
           <h1 className="mt-6 text-3xl font-bold text-slate-950">
-            Log out of PrimeBid?
+            Log out of Auctus?
           </h1>
           <p className="mx-auto mt-3 max-w-md leading-7 text-slate-600">
             {isAuthenticated
@@ -53,7 +53,7 @@ const Logout = () => {
               to="/"
               className="rounded-md border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-800 transition duration-200 hover:border-indigo-300 hover:text-indigo-700"
             >
-              Stay on PrimeBid
+              Stay on Auctus
             </Link>
           </div>
 

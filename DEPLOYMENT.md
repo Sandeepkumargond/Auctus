@@ -1,6 +1,6 @@
-# PrimeBid Deployment Guide
+# Auctus Deployment Guide
 
-PrimeBid is a split MERN app:
+Auctus is a split MERN app:
 
 - `frontend`: Vite + React static app
 - `backend`: Express API + MongoDB
@@ -61,8 +61,8 @@ npm run seed:admin
 
 Default admin credentials created by that command:
 
-- Email: `admin@primebid.local`
-- Password: `PrimeBid@123`
+- Email: `admin@auctus.local`
+- Password: `Auctus@123`
 
 For a deployed backend, run the same command locally with the deployed backend's exact `MONGODB_URL`, or run it from the hosting provider's shell if available. If deployed login fails while local login works, the backend service is almost always pointing at a different MongoDB database or stale environment variable.
 
@@ -86,18 +86,18 @@ SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_MAIL=your-smtp-login@example.com
 SMTP_PASSWORD=your-smtp-app-password
-SMTP_FROM="PrimeBid <your-smtp-login@example.com>"
+SMTP_FROM="Auctus <your-smtp-login@example.com>"
 AI_FEATURES_ENABLED=true
 GEMINI_MODEL=gemini-2.0-flash
 GEMINI_API_KEY=your-gemini-key
 DEMO_DISABLED=false
 DEMO_SESSION_TTL_HOURS=24
 DEMO_MAX_SESSIONS_PER_IP_PER_HOUR=20
-ADMIN_SEED_USERNAME=PrimeBid Admin
-ADMIN_SEED_EMAIL=admin@primebid.local
-ADMIN_SEED_PASSWORD=PrimeBid@123
+ADMIN_SEED_USERNAME=Auctus Admin
+ADMIN_SEED_EMAIL=admin@auctus.local
+ADMIN_SEED_PASSWORD=Auctus@123
 ADMIN_SEED_PHONE=9000000001
-ADMIN_SEED_ADDRESS=PrimeBid admin workspace
+ADMIN_SEED_ADDRESS=Auctus admin workspace
 ```
 
 Notes:
@@ -163,8 +163,8 @@ curl -H "Authorization: Bearer $CRON_SECRET" https://your-backend-domain/api/v1/
 
 The included `render.yaml` can create:
 
-- `primebid-api`: backend web service
-- `primebid-web`: frontend static site
+- `auctus-api`: backend web service
+- `auctus-web`: frontend static site
 
 After creating the services, fill the `sync: false` environment variables in Render.
 

@@ -102,7 +102,7 @@ const SideDrawer = () => {
         type="button"
         onClick={() => setShow((value) => !value)}
         aria-label="Toggle navigation"
-        aria-controls="primebid-navigation"
+        aria-controls="auctus-navigation"
         aria-expanded={show}
         className="fixed left-4 top-4 z-50 inline-flex h-11 w-11 items-center justify-center rounded-md bg-slate-950 text-xl text-white shadow-lg transition hover:bg-indigo-700 sm:left-5 sm:top-5 xl:hidden"
       >
@@ -119,7 +119,7 @@ const SideDrawer = () => {
       )}
 
       <aside
-        id="primebid-navigation"
+        id="auctus-navigation"
         className={`fixed left-0 top-0 z-40 flex h-dvh w-[min(88vw,320px)] flex-col overflow-y-auto border-r border-slate-200 bg-white p-4 shadow-2xl shadow-slate-950/15 transition-transform duration-200 xl:w-[280px] xl:translate-x-0 xl:shadow-none ${
           show ? "translate-x-0" : "-translate-x-full"
         }`}
@@ -131,7 +131,7 @@ const SideDrawer = () => {
             </span>
             <span className="min-w-0">
               <span className="block text-xl font-bold leading-tight text-slate-950">
-                Prime<span className="text-indigo-600">Bid</span>
+                Auc<span className="text-indigo-600">tus</span>
               </span>
               <span className="block truncate text-xs font-semibold text-slate-500">
                 Wallet-backed auctions

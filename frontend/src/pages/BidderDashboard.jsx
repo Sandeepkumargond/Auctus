@@ -392,7 +392,7 @@ const BidderDashboard = () => {
                 ) : (
                   <EmptyState
                     title="Recommendations need activity"
-                    text="Watch or bid on a few auctions so PrimeBid can suggest better picks."
+                    text="Watch or bid on a few auctions so Auctus can suggest better picks."
                   />
                 )}
               </Panel>

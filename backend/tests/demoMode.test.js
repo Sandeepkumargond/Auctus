@@ -61,7 +61,7 @@ test("demo mode env helpers use the shared database and bounded defaults", () =>
   const originalLimit = process.env.DEMO_MAX_SESSIONS_PER_IP_PER_HOUR;
 
   try {
-    process.env.MONGODB_URL = "mongodb://localhost:27017/primebid_test";
+    process.env.MONGODB_URL = "mongodb://localhost:27017/auctus_test";
     delete process.env.DEMO_DISABLED;
     process.env.DEMO_SESSION_TTL_HOURS = "6";
     process.env.DEMO_MAX_SESSIONS_PER_IP_PER_HOUR = "3";

@@ -85,7 +85,7 @@ const Login = () => {
         <div className="hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-indigo-300">
-              PrimeBid
+              Auctus
             </p>
             <h1 className="mt-6 text-5xl font-bold leading-tight">
               Sign in and keep bidding moving.
@@ -207,7 +207,7 @@ const Login = () => {
           </div>
 
           <p className="mt-8 text-center text-sm text-slate-600">
-            New to PrimeBid?{" "}
+            New to Auctus?{" "}
             <Link
               to="/sign-up"
               className="font-semibold text-indigo-700 hover:text-indigo-800"

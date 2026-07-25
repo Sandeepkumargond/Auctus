@@ -323,13 +323,13 @@ const submitKyc = asyncErrorHandler(async (req, res, next) => {
     }
 
     const storedDocuments = {
-        idProof: await storeUploadedFile(idProof, "PRIMEBID_KYC_ID_PROOFS"),
-        selfie: await storeUploadedFile(selfie, "PRIMEBID_KYC_SELFIES"),
+        idProof: await storeUploadedFile(idProof, "AUCTUS_KYC_ID_PROOFS"),
+        selfie: await storeUploadedFile(selfie, "AUCTUS_KYC_SELFIES"),
     };
     if (addressProof) {
         storedDocuments.addressProof = await storeUploadedFile(
             addressProof,
-            "PRIMEBID_KYC_ADDRESS_PROOFS"
+            "AUCTUS_KYC_ADDRESS_PROOFS"
         );
     }
 

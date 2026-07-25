@@ -12,7 +12,7 @@ const AuctionItemDelete = () => {
 
   const handleAuctionDelete = (auction) => {
     const confirmed = window.confirm(
-      `Delete "${auction.title}" from PrimeBid? This moderation action cannot be undone.`
+      `Delete "${auction.title}" from Auctus? This moderation action cannot be undone.`
     );
     if (confirmed) {
       dispatch(deleteAuctionItem(auction._id));

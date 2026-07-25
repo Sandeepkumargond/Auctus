@@ -288,7 +288,7 @@ const WonAuctionCard = ({ auction, currentUser }) => {
               </p>
               <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                {handoff.payment?.method || "PrimeBid wallet"}
+                {handoff.payment?.method || "Auctus wallet"}
               </p>
               <p className="text-sm leading-6 text-slate-600">
                 {handoff.payment?.status ||
@@ -490,7 +490,7 @@ const SettlementPanel = ({ fulfillment }) => {
         />
       </div>
       <p className="rounded-md bg-indigo-50 p-3 text-sm leading-6 text-indigo-900">
-        PrimeBid releases escrow to the seller only after you confirm delivery, or
+        Auctus releases escrow to the seller only after you confirm delivery, or
         after admin resolves a dispute.
       </p>
     </section>

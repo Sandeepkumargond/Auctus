@@ -13,7 +13,7 @@ const HowItWorks = () => {
       icon: UserPlus,
       title: "Create an account",
       description:
-        "Register as a bidder or auctioneer so PrimeBid can show the right actions and account tools.",
+        "Register as a bidder or auctioneer so Auctus can show the right actions and account tools.",
     },
     {
       icon: Gavel,
@@ -37,7 +37,7 @@ const HowItWorks = () => {
       icon: BadgeIndianRupee,
       title: "Automatic settlement",
       description:
-        "PrimeBid deducts the platform fee from the winning bid and credits the remaining sale proceeds to the seller wallet.",
+        "Auctus deducts the platform fee from the winning bid and credits the remaining sale proceeds to the seller wallet.",
     },
     {
       icon: RotateCcw,
@@ -55,7 +55,7 @@ const HowItWorks = () => {
             Process
           </p>
           <h1 className="mt-3 max-w-4xl text-4xl font-bold leading-tight text-slate-950 md:text-6xl">
-            How PrimeBid works from listing to settlement.
+            How Auctus works from listing to settlement.
           </h1>
         </div>
 

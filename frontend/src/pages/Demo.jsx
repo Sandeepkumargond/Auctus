@@ -98,7 +98,7 @@ const Demo = () => {
           <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
             <div>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
-                Try PrimeBid without touching live data.
+                Try Auctus without touching live data.
               </h1>
               <p className="mt-3 max-w-3xl leading-7 text-slate-300">
                 Demo Mode runs on isolated sandbox records in the shared
@@ -187,7 +187,7 @@ const Demo = () => {
           </h2>
           <p className="mt-2 leading-7 text-slate-600">
             Demo money, bids, auction listings, admin actions, fulfillment,
-            withdrawals, and fake history never affect real PrimeBid users or
+            withdrawals, and fake history never affect real Auctus users or
             production records. When you create a real account, only safe
             interests such as bidder watchlist categories can carry over.
           </p>

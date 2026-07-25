@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
         <section className="app-page flex items-center justify-center">
           <div className="max-w-xl rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
             <p className="app-kicker">
-              PrimeBid
+              Auctus
             </p>
             <h1 className="mt-3 text-3xl font-bold text-slate-950">
               Something went wrong

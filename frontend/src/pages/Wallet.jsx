@@ -322,7 +322,7 @@ const Wallet = () => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `primebid-wallet-statement-${new Date()
+    link.download = `auctus-wallet-statement-${new Date()
       .toISOString()
       .slice(0, 10)}.csv`;
     document.body.appendChild(link);
@@ -543,7 +543,7 @@ const Wallet = () => {
                       id="wallet-deposit-description"
                       className="mt-2 pr-8 text-sm text-slate-500"
                     >
-                      Demo checkout credits your PrimeBid wallet instantly after
+                      Demo checkout credits your Auctus wallet instantly after
                       validation.
                     </p>
                     <div className="mt-5 grid gap-4">
@@ -667,7 +667,7 @@ const Wallet = () => {
                                   setCardName(event.target.value)
                                 }
                                 className="rounded-md border border-slate-300 bg-white px-3 py-3 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                                placeholder="PrimeBid Buyer"
+                                placeholder="Auctus Buyer"
                               />
                               {paymentErrors.cardName && (
                                 <span className="text-sm font-medium text-rose-600">

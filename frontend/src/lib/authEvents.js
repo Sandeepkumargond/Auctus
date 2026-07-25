@@ -1,4 +1,4 @@
-export const AUTH_SESSION_EXPIRED_EVENT = "primebid:auth-session-expired";
+export const AUTH_SESSION_EXPIRED_EVENT = "auctus:auth-session-expired";
 
 export const emitSessionExpired = (payload) => {
   if (typeof window === "undefined") return;
