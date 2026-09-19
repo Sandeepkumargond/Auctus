@@ -37,6 +37,8 @@ import {
     closeEndedAuctions,
     repairClosedAuction,
 } from "../utils/auctionClosing.js";
+import { getConnectionStatus } from "../db/connection.js";
+import { getDatabaseMode } from "../utils/demoScope.js";
 
 const allowedImageFormats = ["image/png", "image/jpeg", "image/webp"];
 
@@ -233,6 +235,28 @@ const addnewAuction = asyncErrorHandler(async (req, res, next) => {
     }
 
     try {
+        const dbStatus = getConnectionStatus(getDatabaseMode());
+        if (dbStatus.connected) {
+            const existingDuplicate = await Auction.findOne({
+                createdBy: req.user._id,
+                title: title.trim(),
+                startTime: start,
+                endTime: end,
+                category,
+                status: { $in: ["Published", "Draft"] },
+            });
+
+            if (existingDuplicate) {
+                const now = new Date();
+                return res.status(200).json({
+                    success: true,
+                    message: `Auction item created and will be listed on auction page at ${startTime}`,
+                    serverTime: now.toISOString(),
+                    newAuction: withAuctionTiming(existingDuplicate, now)
+                });
+            }
+        }
+
         const storedImage = await storeUploadedFile(
             image,
             "MERN_AUCTION_PLATFORM_AUCTION_DETAILS"
@@ -368,6 +392,25 @@ const saveAuctionDraft = asyncErrorHandler(async(req,res,next)=>{
     }
 
     const openingBid = Number(startingBid || 0);
+    const dbStatus = getConnectionStatus(getDatabaseMode());
+    if (dbStatus.connected && title && title !== "Untitled draft") {
+        const existingDraft = await Auction.findOne({
+            createdBy: req.user._id,
+            title: title.trim(),
+            status: "Draft",
+            createdAt: { $gte: new Date(Date.now() - 30000) },
+        });
+        if (existingDraft) {
+            const now = new Date();
+            return res.status(200).json({
+                success: true,
+                message: "Auction draft saved",
+                serverTime: now.toISOString(),
+                auctionItem: withAuctionTiming(existingDraft, now),
+            });
+        }
+    }
+
     const newAuction = await Auction.create({
         title,
         description,

@@ -306,11 +306,14 @@ export const createAuction = (data) => async (dispatch) => {
     dispatch(auctionSlice.actions.createAuctionSuccess());
     toast.success(response.data.message);
     dispatch(getAllAuctionItems());
+    dispatch(getMyAuctionItems());
     dispatch(auctionSlice.actions.resetSlice());
+    return response.data;
   } catch (error) {
     dispatch(auctionSlice.actions.createAuctionFailed());
     toastApiError(error);
     dispatch(auctionSlice.actions.resetSlice());
+    return null;
   }
 };
 

@@ -76,6 +76,7 @@ const CreateAuction = () => {
   const [antiSnipingExtensionMinutes, setAntiSnipingExtensionMinutes] = useState(2);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const auctionCategories = [
     "Electronics",
@@ -140,33 +141,55 @@ const CreateAuction = () => {
     };
   };
 
-  const handleCreateAuction = (e) => {
+  const handleCreateAuction = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("category", category);
-    formData.append("condition", condition);
-    formData.append("startingBid", startingBid);
-    formData.append("minimumBidIncrement", minimumBidIncrement);
-    formData.append("antiSnipingExtensionMinutes", antiSnipingExtensionMinutes);
-    formData.append("startTime", startTime);
-    formData.append("endTime", endTime);
-    dispatch(createAuction(formData));
+    if (isSubmitting || loading) return;
+
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("condition", condition);
+      formData.append("startingBid", startingBid);
+      formData.append("minimumBidIncrement", minimumBidIncrement);
+      formData.append("antiSnipingExtensionMinutes", antiSnipingExtensionMinutes);
+      formData.append("startTime", startTime);
+      formData.append("endTime", endTime);
+
+      const res = await dispatch(createAuction(formData));
+      if (res && res.success) {
+        navigateTo("/view-my-auctions");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleSaveDraft = () => {
-    const formData = new FormData();
-    if (image) formData.append("image", image);
-    formData.append("title", title || "Untitled draft");
-    formData.append("description", description);
-    formData.append("category", category);
-    formData.append("condition", condition);
-    formData.append("startingBid", startingBid);
-    if (startTime) formData.append("startTime", startTime);
-    if (endTime) formData.append("endTime", endTime);
-    dispatch(saveAuctionDraft(formData));
+  const handleSaveDraft = async () => {
+    if (isSubmitting || loading) return;
+
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      if (image) formData.append("image", image);
+      formData.append("title", title || "Untitled draft");
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("condition", condition);
+      formData.append("startingBid", startingBid);
+      if (startTime) formData.append("startTime", startTime);
+      if (endTime) formData.append("endTime", endTime);
+
+      const res = await dispatch(saveAuctionDraft(formData));
+      if (res && res.success) {
+        navigateTo("/view-my-auctions");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const setAuctionWindow = (durationHours) => {
@@ -585,18 +608,18 @@ const CreateAuction = () => {
             <button
               type="submit"
               className="btn-primary w-full sm:w-fit"
-              disabled={loading}
+              disabled={loading || isSubmitting}
             >
-              {loading ? "Creating Auction..." : "Create Auction"}
+              {loading || isSubmitting ? "Creating Auction..." : "Create Auction"}
             </button>
             <button
               type="button"
               onClick={handleSaveDraft}
               className="btn-secondary w-full sm:w-fit"
-              disabled={loading}
+              disabled={loading || isSubmitting}
             >
               <Save className="h-4 w-4" />
-              Save Draft
+              {loading || isSubmitting ? "Saving Draft..." : "Save Draft"}
             </button>
           </div>
         </form>
