@@ -14,7 +14,7 @@ const getGeminiConfig = () => {
 
     return {
         apiKey,
-        model: process.env.GEMINI_MODEL || "gemini-2.0-flash",
+        model: process.env.GEMINI_MODEL || "gemini-3.6-flash",
     };
 };
 
@@ -29,49 +29,63 @@ const parseJson = (text) => {
 
 const callGeminiJson = async ({ system, task, payload, temperature = 0.35 }) => {
     const { apiKey, model } = getGeminiConfig();
-    const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-        {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+    const requestBody = JSON.stringify({
+        contents: [
+            {
+                role: "user",
+                parts: [
+                    {
+                        text: [
+                            system,
+                            "",
+                            task,
+                            "",
+                            "Return valid JSON only. Do not wrap it in markdown.",
+                            "",
+                            JSON.stringify(payload),
+                        ].join("\n"),
+                    },
+                ],
+            },
+        ],
+        generationConfig: {
+            temperature,
+            maxOutputTokens: 2048,
+            responseMimeType: "application/json",
+            thinkingConfig: {
+                thinkingBudget: 0,
+            },
+        },
+    });
+
+    let response;
+    let data;
+    for (let attempt = 0; attempt < 2; attempt++) {
+        response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                contents: [
-                    {
-                        role: "user",
-                        parts: [
-                            {
-                                text: [
-                                    system,
-                                    "",
-                                    task,
-                                    "",
-                                    "Return valid JSON only. Do not wrap it in markdown.",
-                                    "",
-                                    JSON.stringify(payload),
-                                ].join("\n"),
-                            },
-                        ],
-                    },
-                ],
-                generationConfig: {
-                    temperature,
-                    maxOutputTokens: 1200,
-                    responseMimeType: "application/json",
-                },
-            }),
-        }
-    );
+            body: requestBody,
+        });
 
-    const data = await response.json();
-    if (!response.ok) {
+        data = await response.json();
+        if (response.ok) break;
+
+        if ((response.status === 503 || response.status === 429) && attempt === 0) {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            continue;
+        }
+
         const err = new Error(data?.error?.message || "Gemini request failed");
         err.statusCode = response.status || 502;
         throw err;
     }
 
     const text = data?.candidates?.[0]?.content?.parts
+        ?.filter((part) => !part.thought)
         ?.map((part) => part.text || "")
         .join("")
         .trim();

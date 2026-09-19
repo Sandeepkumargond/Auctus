@@ -57,7 +57,7 @@ services:
       SMTP_FROM: ${SMTP_FROM}
       # ── AI ────────────────────────────────────────────────────────
       AI_FEATURES_ENABLED: ${AI_FEATURES_ENABLED:-false}
-      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.0-flash}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.6-flash}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       # ── Demo mode ─────────────────────────────────────────────────
       DEMO_DISABLED: ${DEMO_DISABLED:-false}
